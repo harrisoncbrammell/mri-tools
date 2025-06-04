@@ -1,4 +1,4 @@
-function process_nifti_exp_mono_t2(inputnii, inputmask, outputpath, et)
+function process_nifti_exp_mono_t2(inputnii, inputmask, outputpath, et, t2, m0, snr)
 %this function takes a nifti file and processes it using mono_t2 method,
 %saves the processed nifti to outputpath
 %must be in working directory of qMRLab v2.4.2 (only tested version)
@@ -12,7 +12,7 @@ if nargin < 1
 end
 
 %checking if valid nifti input was supplied
-if ~exist('inputnii','file')
+if ~exist(inputnii,'file')
     error("Error: No valid input nifti file path provided");
 end
 
@@ -30,16 +30,41 @@ Model.Prot.SEdata.Mat = [ et ];
 %creating the data struct, loading data from nifti,
 data = struct();
 data.SEdata = double(load_nii_data(inputnii));
-if exist('inputmask','var')
+if exist(inputmask,'file')
     data.Mask=double(load_nii_data(inputmask));
 end
 
 %checks if output path exhists and if not specifies current directory
 %fitting data and saving file
 fit_results = ParFitData(data, Model);
-if ~exist('outputpath', 'dir')
+if ~exist(outputpath, 'dir')
     outputpath = pwd;
 end
 FitResultsSave_nii(fit_results,inputnii,outputpath);
+FitResultsSave_mat(fit_results,inputnii,outputpath);
+
+%run simulations and save output to png
+%single voxel curve
+svcx = struct();
+x.T2 = 100;
+x.M0 = 1000;
+Opt.SNR = 50;
+svcfig = figure('Name','Single Voxel Curve Simulation', 'Visible','off');
+FitResultsvc = Model.Sim_Single_Voxel_Curve(x,Opt);
+saveas(svcfig, 'single_voxel_curve.png');
+savefig(svgfig, 'single_voxel_curve.fig');
+
+%Sensitivity Analysis
+OptTable.st = [1e+02         1e+03]; % nominal values
+OptTable.fx = [0             1]; %vary T2...
+OptTable.lb = [1             1]; %...from 1
+OptTable.ub = [3e+02         1e+04]; %...to 300
+Opt.SNR = 50;
+Opt.Nofrun = 5;
+SimResults = Model.Sim_Sensitivity_Analysis(OptTable,Opt);
+sensfig = figure('Name','Sensitivity Analysis','Visible','off');
+SimVaryPlot(SimResults, 'T2' ,'T2' );
+saveas(sensfig, 'sensitivity_curve.png');
+savefig(sensfig, 'sensitivity_curve.fig');
 
 end
