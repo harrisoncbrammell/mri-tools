@@ -28,10 +28,11 @@ end
 Model.Prot.SEdata.Mat = [ et ];
 
 %creating the data struct, loading data from nifti,
+%account for load_nii_data rotating input 
 data = struct();
-data.SEdata = double(load_nii_data(inputnii));
+data.SEdata = double(rot90(load_nii_data(inputnii)));
 if exist('inputmask','var')
-    data.Mask=double(load_nii_data(inputmask));
+    data.Mask=double(rot90(load_nii_data(inputmask)));
 end
 
 %checks if output path exhists and if not specifies current directory
