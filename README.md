@@ -4,6 +4,8 @@ This repository contains a collection of MATLAB functions designed to simplify c
 
 ---
 
+![Profile views](https://views.igorkowalczyk.dev/api/badge/harrisoncbrammell?style=classic)
+
 ## Functions
 
 ### 1. `nii3to4d.m`
