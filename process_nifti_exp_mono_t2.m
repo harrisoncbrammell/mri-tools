@@ -40,8 +40,8 @@ fit_results = ParFitData(data, Model);
 if ~exist(outputpath, 'dir')
     outputpath = pwd;
 end
-FitResultsSave_nii(fit_results,inputnii,outputpath);
-FitResultsSave_mat(fit_results,inputnii,outputpath);
+FitResultsSave_nii(fit_results,inputnii);
+Model.saveObj(outputpath+'mono_t2_config.qmrlab.mat'); %%debug
 
 %run simulations and save output to png
 %single voxel curve
@@ -49,10 +49,10 @@ svcx = struct();
 x.T2 = 100;
 x.M0 = 1000;
 Opt.SNR = 50;
-svcfig = figure('Name','Single Voxel Curve Simulation', 'Visible','off');
+svcfig = figure('Name','Single Voxel Curve Simulation');
 FitResultsvc = Model.Sim_Single_Voxel_Curve(x,Opt);
-saveas(svcfig, 'single_voxel_curve.png');
-savefig(svgfig, 'single_voxel_curve.fig');
+saveas(svcfig, outputpath+'single_voxel_curve.png');
+savefig(svcfig, outputpath+'single_voxel_curve.fig');
 
 %Sensitivity Analysis
 OptTable.st = [1e+02         1e+03]; % nominal values
