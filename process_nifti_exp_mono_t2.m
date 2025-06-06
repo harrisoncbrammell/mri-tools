@@ -26,6 +26,7 @@ if ~exist('et','var')
     et = transpose([10:10:70]);
 end
 Model.Prot.SEdata.Mat = [ et ];
+Model.saveObj(fullfile(outputpath, 'mono_t2_config.qmrlab.mat'), 'Model'); % REMOVE IN PRODUCTION
 
 %creating the data struct, loading data from nifti,
 data = struct();
@@ -33,6 +34,7 @@ data.SEdata = double(load_nii_data(inputnii));
 if exist(inputmask,'file')
     data.Mask=double(load_nii_data(inputmask));
 end
+save(fullfile(outputpath, 'mono_t2_data.mat'), 'data'); % Save the data struct as a .mat file for later use
 
 %checks if output path exhists and if not specifies current directory
 %fitting data and saving file
@@ -40,8 +42,7 @@ fit_results = ParFitData(data, Model);
 if ~exist(outputpath, 'dir')
     outputpath = pwd;
 end
-FitResultsSave_nii(fit_results,inputnii);
-Model.saveObj(outputpath+'mono_t2_config.qmrlab.mat'); %%debug
+FitResultsSave_nii(fit_results,inputnii,outputpath);
 
 %run simulations and save output to png
 %single voxel curve
@@ -49,10 +50,13 @@ svcx = struct();
 x.T2 = 100;
 x.M0 = 1000;
 Opt.SNR = 50;
-svcfig = figure('Name','Single Voxel Curve Simulation');
+svcfig = figure('Name','Single Voxel Curve Simulation','Visible','off');
 FitResultsvc = Model.Sim_Single_Voxel_Curve(x,Opt);
-saveas(svcfig, outputpath+'single_voxel_curve.png');
-savefig(svcfig, outputpath+'single_voxel_curve.fig');
+title("Single Voxel Curve");
+saveas(svcfig, fullfile(outputpath, 'single_voxel_curve.jpg'));
+savefig(svcfig, fullfile(outputpath, 'single_voxel_curve.fig'));
+% Close the single voxel curve figure to free up resources
+close(svcfig);
 
 %Sensitivity Analysis
 OptTable.st = [1e+02         1e+03]; % nominal values
@@ -64,7 +68,7 @@ Opt.Nofrun = 5;
 SimResults = Model.Sim_Sensitivity_Analysis(OptTable,Opt);
 sensfig = figure('Name','Sensitivity Analysis','Visible','off');
 SimVaryPlot(SimResults, 'T2' ,'T2' );
-saveas(sensfig, 'sensitivity_curve.png');
-savefig(sensfig, 'sensitivity_curve.fig');
+saveas(sensfig, fullfile(outputpath, 'sensitivity_curve.png'));
+savefig(sensfig, fullfile(outputpath, 'sensitivity_curve.fig'));
 
 end
