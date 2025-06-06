@@ -26,7 +26,7 @@ if ~exist('et','var')
     et = transpose([10:10:70]);
 end
 Model.Prot.SEdata.Mat = [ et ];
-Model.saveObj(fullfile(outputpath, 'mono_t2_config.qmrlab.mat'), 'Model'); % REMOVE IN PRODUCTION
+Model.saveObj(fullfile(outputpath, 'mono_t2_config.qmrlab.mat')); % REMOVE IN PRODUCTION
 
 %creating the data struct, loading data from nifti,
 data = struct();
