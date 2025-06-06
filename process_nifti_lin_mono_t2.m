@@ -1,4 +1,4 @@
-function process_nifti_exp_mono_t2(inputnii, inputmask, outputpath, et, t2, m0, snr)
+function process_nifti_lin_mono_t2(inputnii, inputmask, outputpath, et, t2, m0, snr)
 %this function takes a nifti file and processes it using mono_t2 method,
 %saves the processed nifti to outputpath
 %must be in working directory of qMRLab v2.4.2 (only tested version)
@@ -26,6 +26,7 @@ if ~exist('et','var')
     et = transpose([10:10:70]);
 end
 Model.Prot.SEdata.Mat = [ et ];
+Model.options.FitType = 'Linear';
 Model.saveObj(fullfile(outputpath, 'mono_t2_config.qmrlab.mat'), 'Model'); % REMOVE IN PRODUCTION
 
 %creating the data struct, loading data from nifti,
