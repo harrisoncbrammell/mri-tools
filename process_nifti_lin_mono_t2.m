@@ -27,7 +27,7 @@ if ~exist('et','var')
 end
 Model.Prot.SEdata.Mat = [ et ];
 Model.options.FitType = 'Linear';
-Model.saveObj(fullfile(outputpath, 'mono_t2_config.qmrlab.mat'), 'Model'); % REMOVE IN PRODUCTION
+Model.saveObj(fullfile(outputpath, 'mono_t2_config.qmrlab.mat')); % REMOVE IN PRODUCTION
 
 %creating the data struct, loading data from nifti,
 data = struct();
