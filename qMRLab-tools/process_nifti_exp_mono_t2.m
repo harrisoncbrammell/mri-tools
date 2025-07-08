@@ -46,7 +46,7 @@ FitResultsSave_nii(fit_results,inputnii,outputpath);
 
 %run simulations and save output to png
 %single voxel curve
-svcx = struct();
+x = struct();
 x.T2 = 100;
 x.M0 = 1000;
 Opt.SNR = 50;
