@@ -162,3 +162,5 @@ Converts a DICOM file and returns an image object.
 ## Disclaimer
 
 These tools are provided as-is. Please ensure you have the necessary dependencies (e.g., [qMRLab v2.4.2](https://github.com/qMRLab/qMRLab/releases/tag/v2.4.2)) installed and correctly configured for successful execution.
+
+*This README documentation was created with the assistance of AI.*
