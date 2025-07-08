@@ -80,7 +80,7 @@ normImg = normClamp(image, low, high)
 
 ### qMRLab Tools (`qMRLab-tools/`)
 
-These tools require [qMRLab v2.4.2](https://github.com/harrisoncbrammell/qMRLab) - Harrison's fork with specific modifications for the Auburn University MRI Research Center.
+These tools require [qMRLab v2.4.2](https://github.com/harrisoncbrammell/qMRLab) - My fork with specific modifications for work done at the Auburn University MRI Research Center.
 
 #### `process_nifti_exp_mono_t2.m`
 
