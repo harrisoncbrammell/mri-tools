@@ -38,18 +38,21 @@ Searches through a directory for DICOM files and returns a 4D array of size [x, 
 **Usage:**
 ```matlab
 data = dicomto4d(path)
+data = dicomto4d(path, order)
 ```
 
 **Parameters:**
 * `path`: Directory path containing DICOM files.
+* `order` (optional): Array specifying the reordering of files for the fourth dimension. Indices correspond to the naturally sorted file order.
 
 **Returns:**
 * `data`: 4D array containing all DICOM images.
 
 **Details:**
 * Uses natural sorting to order DICOM files numerically (1.dcm, 2.dcm, etc.).
+* If `order` parameter is provided, files are reordered according to the specified indices.
 * Creates a 4D array based on the size of the first DICOM file.
-* Files must be numbered in the order they should appear in the fourth dimension.
+* Files must be numbered in the order they should appear in the fourth dimension (unless reordered).
 * Designed for DICOM files as produced by Siemens MRI scanners.
 
 ---
