@@ -97,6 +97,17 @@ An image object, which is a handle to a hidden figure containing the displayed D
 
 ---
 
+### 4. `dicomto4d(path)`
+
+Searches through the path directory for DICOM files labeled '1.dcm', '2.dcm', and returns a 4D array of size [x, y, z, # of DICOMS]
+
+#### Prerequisites
+
+* files must all be in the same directory
+* files must be numbered in the order they should take in the fourth dimension of the output array
+
+---
+
 ## Disclaimer
 
 These tools are provided as-is. Please ensure you have the necessary dependencies (e.g., [qMRLab v2.4.2](https://github.com/qMRLab/qMRLab/releases/tag/v2.4.2)) installed and correctly configured for successful execution.
