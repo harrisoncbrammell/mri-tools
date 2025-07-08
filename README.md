@@ -80,6 +80,8 @@ normImg = normClamp(image, low, high)
 
 ### qMRLab Tools (`qMRLab-tools/`)
 
+These tools require [qMRLab v2.4.2](https://github.com/harrisoncbrammell/qMRLab) - Harrison's fork with specific modifications for the Auburn University MRI Research Center.
+
 #### `process_nifti_exp_mono_t2.m`
 
 Processes a NIfTI file using the mono_T2 model with exponential fitting. Utilizes [qMRLab](https://github.com/qMRLab/qMRLab) **v2.4.2**.
