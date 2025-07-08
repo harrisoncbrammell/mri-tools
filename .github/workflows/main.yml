@@ -1,0 +1,21 @@
+name: Block Patient Data File Types
+
+on:
+  push:
+    branches:
+      - main # You can change this to your default branch or add more branches
+
+jobs:
+  check-for-disallowed-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for .nii, .nii.gz, or .dcm files
+        run: |
+          if find . -type f \( -name "*.nii" -o -name "*.nii.gz" -o -name "*.dcm" \) -print -quit | grep -q .; then
+            echo "Error: Found disallowed file types (.nii, .nii.gz, or .dcm)."
+            echo "These files may contain sensitive patient data and cannot be committed to the repository."
+            exit 1
+          fi
