@@ -1,7 +1,10 @@
-function data = dicomto4d(path)
+function data = dicomto4d(path, order)
    %create list of 3d dicom files ordering based on name (expects 1.dcm,
    %2.dcm, etc as produced by Siemens MRI scanners in the Auburn MRI Lab
    files = natsort({dir(fullfile(path, '*.dcm')).name});
+   if nargin > 1
+    files = files(order); %%reorder files if new order given
+   end
    numFiles = length(files);
 
    %create 4d data array based on size of a first 3d dicom array
